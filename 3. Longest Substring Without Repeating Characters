@@ -1,0 +1,98 @@
+Approach 1. Naive brute force
+string length = n =>
+O(n**2) substring, 
+each string take o(n) to check with a hashtable/ array //scan each substring will take o(n) time
+
+since the leetcode inputs are ascii, there are only 128 unique characters => max length = 128
+
+time complexity: o(n**3) => o(n*128**2) 986/987 test cases passed
+
+the longest test case's length is 31652 => even o(n**2) will TLE BUT O(n*128) should pass
+space complexity: o(128)
+
+Approach 2. optimized brute force
+for each starting index i, find the longest substring
+
+time complexity: o(n) * o (n) = o(n**2) => o(n*128) due to characters limitation
+space complexity: o(128)
+
+Approach 3: Hashtable/ sliding window
+
+while (i,j) with unique characters
+1. use a hashtable to store the last indies of each characters
+2. keep track the valid starting point
+  a. when there is a match update the starting point to the current one
+  i = max(i, m[s[j]] + 1), length = j - i + 1
+  time complexity o(n)
+  
+  
+  
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        ans = 0
+        # mp stores the current index of a character
+        mp = {}
+        i = 0
+        # try to extend the range [i, j]
+        for j in range(n):
+            if s[j] in mp:
+                i = max(mp[s[j]] + 1, i)
+            ans = max(ans, j - i + 1)
+            mp[s[j]] = j 
+        return ans
+    
+
+     def lengthOfLongestSubstring(self, s: str) -> int:
+        dicts = {}
+        max_len = start = 0
+        for i, c in enumerate(s):
+            if c in dicts:
+                if dicts[c] >= start:
+                    start = dicts[c]+1
+            
+            l = i - start + 1
+            if l > max_len:
+                max_len = l            
+            dicts[c] = i
+            
+        return max_len
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        dict = {} # define dictinary
+        sp = 0 # start point 
+        ans = 0 # define substring lenth
+        
+        for i, ep in enumerate(s): # i for index, ep for value
+            if ep in dict:
+                if dict[ep] >= sp:  # redefine the start point by comparing the duplicate character's index and start point index
+                    sp = dict[ep] + 1 # start point will be the index.next of the duplicate due to duplicate will remove from the windows
+                
+            if i - sp + 1 > ans: # check the rest window are longest or not
+                ans = i - sp + 1 
+                    
+            dict[ep] = i #update the new value index
+                
+        return ans
+        
+        
+ class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        dict = {} # define dictinary
+        sp = 0 # start point 
+        ans = 0 # define substring lenth
+        
+        for i, ep in enumerate(s): # i for index, ep for value
+            if ep in dict:
+                sp = max(dict[ep] + 1, sp)
+# redefine the start point by comparing the duplicate character's index and start point index
+# start point will be the index.next of the duplicate due to duplicate will remove from the windows
+                
+            ans = max(i - sp + 1, ans) # check the rest window are longest or not 
+                    
+            dict[ep] = i #update the new value index
+                
+        return ans
