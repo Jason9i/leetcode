@@ -1,0 +1,62 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        start = rst = ListNode(0) #start point to the first element of the list, rst point to the last element of the list. 
+        carry = 0
+        while l1 or l2 or carry:
+            sum = (l1.val if l1 else 0) + (l2.val if l2 else 0) + carry
+            carry = sum // 10 #python special 
+            rst.next = ListNode(sum % 10) #rst.next will create a new last element of the list node
+            rst = rst.next
+            l1 = l1.next if l1 else None 
+            l2 = l2.next if l2 else None
+        return(start.next) #start.next will print all the rest of the listnode
+            
+            
+            
+           
+Update:
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        start = rst = ListNode(0) ##start point to the first element of the list, rst point to the last element of the list.##
+        s = 0
+        while l1 or l2 or s:
+            s += (l1.val if l1 else 0) + (l2.val if l2 else 0)
+            rst.next = ListNode(s % 10) #rst.next will create a new last element of the list node
+            s //= 10
+            rst = rst.next
+            l1 = l1.next if l1 else None 
+            l2 = l2.next if l2 else None
+        return(start.next) #start.next will print all the rest of the listnode
+        
+        
+        
+>>> 8 / 5  # division always returns a floating point number
+1.6
+
+Division (/) always returns a float. To do floor division and get an integer result (discarding any fractional result) you can use the // operator; 
+to calculate the remainder you can use %:
+
+>>> 17 / 3  # classic division returns a float
+5.666666666666667
+>>> 17 // 3  # floor division discards the fractional part
+5
+>>> 17 % 3  # the % operator returns the remainder of the division
+2
+>>> 5 * 3 + 2  # result * divisor + remainder
+17
+
+>>> 5 ** 2  # 5 squared
+25
+>>> 2 ** 7  # 2 to the power of 7
+128
