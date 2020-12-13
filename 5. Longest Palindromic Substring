@@ -1,0 +1,181 @@
+Palindromic:
+In computer science, the longest palindromic substring or longest symmetric factor problem 
+is the problem of finding a maximum-length contiguous substring of a given string that is also a palindrome. 
+
+DP -- Dynamic programming:
+Dynamic Programming (DP) is an algorithmic technique for solving an optimization problem by breaking it down into simpler subproblems 
+and utilizing the fact that the optimal solution to the overall problem depends upon the optimal solution to its subproblems.
+
+  1. Overlapping Subproblems
+Subproblems are smaller versions of the original problem. Any problem has overlapping sub-problems if finding its solution involves solving the same subproblem multiple times. 
+
+  2. Optimal Substructure Property 
+Any problem has optimal substructure property if its overall optimal solution can be constructed from the optimal solutions of its subproblems.
+
+Dynamic Programming Methods
+  1. Top-down with Memoization
+  In this approach, we try to solve the bigger problem by recursively finding the solution to smaller sub-problems. 
+  Whenever we solve a sub-problem, we cache its result so that we don’t end up solving it repeatedly if it’s called multiple times. 
+  Instead, we can just return the saved result. This technique of storing the results of already solved subproblems is called Memoization.
+  
+  non-DP recursive solution for Python 3
+  def calculateFibonacci(n):
+    if n < 2:
+     return n
+
+    return calculateFibonacci(n - 1) + calculateFibonacci(n - 2)
+
+  def main():
+    print("5th Fibonacci is ---> " + str(calculateFibonacci(5)))
+    print("6th Fibonacci is ---> " + str(calculateFibonacci(6)))
+    print("7th Fibonacci is ---> " + str(calculateFibonacci(7)))
+
+  main()
+  
+  use of memoization for Python 3:
+  def calculateFibonacci(n):
+    memoize = [-1 for x in range(n+1)]
+    return calculateFibonacciRecur(memoize, n)
+
+  def calculateFibonacciRecur(memoize, n):
+    if n < 2:
+     return n
+
+    # if we have already solved this subproblem, simply return the result from the cache
+    if memoize[n] >= 0:
+      return memoize[n]
+
+    memoize[n] = calculateFibonacciRecur(
+      memoize, n - 1) + calculateFibonacciRecur(memoize, n - 2)
+    return memoize[n]
+ 
+  def main():
+    print("5th Fibonacci is ---> " + str(calculateFibonacci(5)))
+    print("6th Fibonacci is ---> " + str(calculateFibonacci(6)))
+    print("7th Fibonacci is ---> " + str(calculateFibonacci(7)))
+
+  main()
+  
+  
+   2. Bottom-up with Tabulation
+    Tabulation is the opposite of the top-down approach and avoids recursion. 
+    In this approach, we solve the problem “bottom-up” (i.e. by solving all the related sub-problems first).
+    This is typically done by filling up an n-dimensional table. Based on the results in the table, the solution to the top/original problem is then computed.
+
+    Tabulation is the opposite of Memoization, as in Memoization we solve the problem and maintain a map of already solved sub-problems. 
+    In other words, in memoization, we do it top-down in the sense that we solve the top problem first (which typically recurses down to solve the sub-problems).
+   
+    def calculateFibonacci(n):
+      dp = [0, 1]
+      for i in range(2, n + 1):
+       dp.append(dp[i - 1] + dp[i - 2])
+
+      return dp[n]
+
+    def main():
+      print("5th Fibonacci is ---> " + str(calculateFibonacci(5)))
+      print("6th Fibonacci is ---> " + str(calculateFibonacci(6)))
+      print("7th Fibonacci is ---> " + str(calculateFibonacci(7)))
+
+    main()
+   
+   
+   append() Parameters
+    The method takes a single argument
+
+    item - an item to be added at the end of the list
+    The item can be numbers, strings, dictionaries, another list, and so on.
+    
+    # animals list
+    animals = ['cat', 'dog', 'rabbit']
+
+    # 'guinea pig' is appended to the animals list
+    animals.append('guinea pig')
+
+    # Updated animals list
+    print('Updated animals list: ', animals)
+    
+   
+    o(n**2) <= 1000k
+    
+    Palindrome:
+      odd: a, aba, abcba
+      even: aa, abba
+      
+      compare head and tail
+      
+      #entire string:
+      def isPalindrome(s):
+        n = len(s)
+        for i in range (n // 2 + 1) # find the middle point, no matter it is odd or even
+          if s[i] != s[n - i -1]: return False
+         return True
+
+
+
+#substring s[l~r]
+      def isPalidrome(s, l, r):
+        while l < r:
+          if s[l] != s[r]: return False  # did not meet the palidrome, 
+          l += 1
+          r -= 1  #shrink the window for left and right by 1
+        return True
+        
+      Solution 1: Naive Brute Force
+      Try all possible substring, and check each substring
+      
+      there are o(n**2) susbtring, each take o(n) time to check
+      
+      time complexity: o(n**3)
+      space complexity: o(1)
+      
+      best = ""
+      for i in range (n)
+        for j in range (i, n)
+           if j - i + 1 > len(best)  and isPalidrome(s, l, r):
+              best = s[i:j+1]
+      return best
+      
+      Optimization: remove redundant computation/ reuse computation/ DP
+        1. if s[i~j] is a palindrome. s[i+1~j-1] is also a one
+        2. if s[i~j] is not a palindrome, s[i-1~j+1] can not be a palindrome
+        
+      Instead of starting from two sides, we can start from the center. For each index i, or pair (i, i+1) 
+      we take it as the middle elements and expand towards two ends to find the longest palindrome
+      
+      each scan will take 1 from left and right, o(1)
+      all scan times is n/2
+      middle point amount will be 2n due to odd or even o(2n)
+      time complexity: o(1*n/2*2n) = o(n**2) if any node are different, take o(1) to get the result, o(n**2) => o(n)
+      
+      if dp[l + 1][r - 1] and s[l] == s[r]: dp[l][r] = True
+      
+      This step takes o(n) and there are o(n) indices
+      
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)  // get length of the string
+        def getlen(l, r):
+            while l >= 0 and r < n and s[l] == s[r]: # limit the result inside the string n 
+                l -= 1 #scan toward left by 1
+                r += 1 #scan toward right by 1
+            return r - l - 1 #break once it did not match s[l] = s[r], so the new two node should not include in the result, 
+        
+        start = 0  
+        length = 0
+        
+        for i in range(n): # middle point
+            cur = max(getlen(i, i),   #odd middle point
+                      getlen(i, i + 1)) #even middle point
+            if cur <= length: continue
+            length = cur
+            start = i - (cur - 1) // 2   #calculate the start point based on
+             middle point 
+        return s[start: start + length]    
+        
+        
+         
+      
+           
+        
+        
