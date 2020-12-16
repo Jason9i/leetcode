@@ -1,0 +1,48 @@
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+        ro=len(nums)
+        col=len(nums[0])
+        if ro*col != r*c:
+            return nums
+        li=[]
+        for i in nums:
+            li.extend(i)
+        ans=[]
+        for i in range(0,len(li),c):
+            temp=li[i:i+c]
+            ans.append(temp)
+        return ans
+
+
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+    flat_list = []
+    matrix = []
+
+    for sublist in nums:
+        for item in sublist:
+            flat_list.append(item)
+
+    if len(flat_list) != r * c:
+        return nums
+    else:
+        for i in range(0,len(flat_list),c):
+            matrix.append(flat_list[i:i+c])
+        return matrix
+      
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+
+        list = []
+        ans = []
+        
+        for n1 in nums:
+            for n2 in n1:
+                list.append(n2)
+        
+        if len(list)!= r*c:
+            return nums
+        else:
+            for i in range(0,len(list),c):
+                ans.append(list[i:i+c])
+            return ans            
