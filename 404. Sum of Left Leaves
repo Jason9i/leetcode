@@ -1,0 +1,47 @@
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry")           # Terry 入队
+queue.append("Graham")          # Graham 入队
+queue.popleft()                 # 队首元素出队
+#输出: 'Eric'
+queue.popleft()                 # 队首元素出队
+#输出: 'John'
+print(queue)                           # 队列中剩下的元素
+#输出: deque(['Michael', 'Terry', 'Graham'])
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+from collections import deque
+class Solution:
+    def sumOfLeftLeaves(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        
+        q = deque([root])
+        res = 0
+        
+        while q:
+            node = q.popleft()
+            
+            if node.left:
+                q.append(node.left)
+                if not node.left.left and not node.left.right:
+                    res += node.left.val
+            
+            if node.right:
+                q.append(node.right)
+        return res
+        
+        
+二叉树（Binary Tree）是包含个节点的有限集合，该集合或者为空集（此时，二叉树称为空树），或者由一个根节点和两棵互不相交的、分别称为根节点的左子树和右子树的二叉树组成。
+前序遍历：root -> left -> right
+中序遍历：left -> root -> right
+后续遍历：left ->right -> root
+
