@@ -1,5 +1,7 @@
 class Solution:
     def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+        if nums = None
+            return nums
         ro=len(nums)
         col=len(nums[0])
         if ro*col != r*c:
