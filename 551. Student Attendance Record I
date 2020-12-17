@@ -1,0 +1,32 @@
+class Solution:
+    def checkRecord(self, s: str) -> bool:
+        cnt_A = 0; d = collections.defaultdict(int)
+        for ind in range(len(s)):
+            if s[ind] =="A":
+                cnt_A+=1
+                if cnt_A>1:
+                    return False
+            if s[ind] == "L":
+                d[ind]=ind
+                if (ind-2 in d):
+                    if (ind-1 in d):
+                        return False
+        return True
+
+class Solution:
+    def checkRecord(self, s: str) -> bool:
+        ab = la = 0
+        for i,j in enumerate(s):
+            if j == "A":
+                ab += 1
+            if ab >= 2:
+                return False
+    
+            if  s.count('LLL') > 0:
+                return False
+        return True
+
+    def checkRecord(self, s: str) -> bool:
+        if s.count('A') > 1 or s.count('LLL') > 0:
+            return False
+        return True
