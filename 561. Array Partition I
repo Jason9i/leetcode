@@ -1,0 +1,24 @@
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        nums.sort()
+        ans = 0
+        
+        for i,j in enumerate(nums):
+            if i % 2 == 0:
+                ans += nums[i]
+        return ans
+        
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        nums.sort()
+        return sum(nums[0::2])
+        
+range(10)[::2]
+>>>>>[0, 2, 4, 6, 8]
+
+seq[start:end:step]
+
+>>> range(100)[5:18:2]
+[5, 7, 9, 11, 13, 15, 17]
+
+[i:j:k]是，根据该“片第从i到j与第k步”。何时i和j缺席，整个序列是和s[::k]意思是“每k个项目”
