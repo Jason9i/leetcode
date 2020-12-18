@@ -1,0 +1,99 @@
+1.	BFS stands for Breadth First Search.	
+    DFS stands for Depth First Search.
+2.	BFS(Breadth First Search) uses Queue data structure for finding the shortest path.	
+    DFS(Depth First Search) uses Stack data structure.
+3.	BFS can be used to find single source shortest path in an unweighted graph, because in BFS, we reach a vertex with minimum number of edges from a source vertex.	
+    In DFS, we might traverse through more edges to reach a destination vertex from a source.
+3.	BFS is more suitable for searching vertices which are closer to the given source.	
+    DFS is more suitable when there are solutions away from source.
+4.	BFS considers all neighbors first and therefore not suitable for decision making trees used in games or puzzles.	
+    DFS is more suitable for game or puzzle problems. We make a decision, then explore all paths through this decision. And if this decision leads to win situation, we stop.
+5.	The Time complexity of BFS is O(V + E) when Adjacency List is used and O(V^2) when Adjacency Matrix is used, where V stands for vertices and E stands for edges.	
+    The Time complexity of DFS is also O(V + E) when Adjacency List is used and O(V^2) when Adjacency Matrix is used, where V stands for vertices and E stands for edges.
+    
+    
+Breadth First Traversal : 1 2 3 4 5
+
+Depth First Traversals:
+      Preorder Traversal : 1 2 4 5 3 
+      Inorder Traversal  :  4 2 5 1 3 
+      Postorder Traversal : 4 5 2 3 1
+      
+A) Depth-First Search   
+ DFS is the most straight-forward solution for this problem. The code below presents a clean implementation :)     
+class Solution:
+    def averageOfLevels(self, root):
+        A = defaultdict(int  )
+        N = defaultdict(float)
+        def dfs(n,d):
+            if n:
+                A[d] += n.val
+                N[d] += 1
+                dfs(n.left ,d+1)
+                dfs(n.right,d+1)
+        #
+        dfs(root,0)
+        return [ A[i]/N[i] for i in range(len(A)) ]
+        
+        
+        
+   B) Breadth-First Search
+   The code below presents an implementation of a BFS algorithm . 
+   This approach may be beneficial for linear Binary Trees, which are always descending (without branching). 
+   In such cases, the "solver" function may run with O(1) space complexity.
+   
+   class Solution:
+    def solver(self,root):
+        # Internal Solver
+        if not root:
+            return
+        stack = [root]
+        while stack:
+            yield sum([n.val for n in stack]) / float(len(stack))
+            new = []
+            for n in stack:
+                if n.left:
+                    new.append(n.left)
+                if n.right:
+                    new.append(n.right)
+            stack = new
+    def averageOfLevels(self, root):
+        return list(self.solver(root))
+        
+        
+        
+   [] # list
+   .append
+   set() #set
+   .  add
+   
+   
+   # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+	def averageOfLevels(self, root):
+		if not root:return rpot
+		q=[root]
+		deq=[]
+		ans=0
+		count=0
+		res=[]
+		while q:
+			for i in q:
+				count+=1
+				if i.left:
+					deq.append(i.left)
+				if i.right:
+					deq.append(i.right)
+				ans+=i.val
+			res.append(ans/float(count))
+			ans=0
+			count=0
+			q=deq
+			deq=[]
+		return res
+        
