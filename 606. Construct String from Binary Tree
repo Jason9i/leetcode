@@ -1,0 +1,58 @@
+class Solution:
+    def traverse(self, node, string):
+        if (node.right != None or node.left != None):
+            string.append(str(node.val) + "(")
+
+
+            if (node.left == None):
+                string.append(")")
+            else:
+                self.traverse(node.left, string)
+
+
+            if (node.right != None):
+                string.append("(")
+                self.traverse(node.right, string)
+        else:
+            string.append(str(node.val))
+            
+        string.append(")")
+            
+        
+        
+    def tree2str(self, t: TreeNode) -> str:
+        string = []
+        
+        
+        if (t != None):
+            self.traverse(t, string)
+            string.pop()
+        
+        return "".join(string)
+        
+        
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def tree2str(self, t: TreeNode) -> str:
+        if not t: return ""
+        res = self.helper(t)
+        return res[1:-1]
+    
+    def helper(self, t: TreeNode) -> str:
+        if not t:
+            return "()"
+        
+        mystr = "(" + str(t.val)
+        lstr = self.helper(t.left)
+        rstr = self.helper(t.right)
+        if (rstr != "()"):
+            mystr += lstr + rstr
+        elif lstr != "()":
+            mystr += lstr
+        mystr += ")"
+        return mystr
