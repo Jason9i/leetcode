@@ -1,0 +1,33 @@
+class Solution(object):
+    def findSecondMinimumValue(self, root):
+        s = set()
+        stack = deque()
+        stack.append(root)
+        
+        while stack:
+            pop = stack.popleft()
+            if pop.left:
+                stack.append(pop.left)
+            if pop.right:
+                stack.append(pop.right)
+            s.add(pop.val)
+        if len(sorted(s))>1:
+            return sorted(s)[1]
+        else: 
+            return -1
+        
+      
+
+class Solution:
+    def findSecondMinimumValue(self, root: TreeNode) -> int:
+        def getSecond(node):
+            if not node:
+                return math.inf
+            
+            if node.val != root.val:
+                return node.val
+            
+            return min(getSecond(node.left), getSecond(node.right))
+       
+        second = min(getSecond(root.left), getSecond(root.right))
+        return second if second != math.inf else -1
