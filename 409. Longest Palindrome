@@ -1,0 +1,107 @@
+brute force o(n!)
+greedy: o(n)
+1. count the frenquency of each character
+2. build from the center, pick a pair, put one in the front and one in the end
+3.if there is single char left, put in the middle
+
+def longestPalindrome_set(s):
+    ss = set()
+    for letter in s:
+        if letter not in ss:
+            ss.add(letter)
+        else:
+            ss.remove(letter)
+    if len(ss) != 0:
+        return len(s) - len(ss) + 1
+    else:
+        return len(s)
+
+#首先引入该方法
+from collections import Counter
+
+#对列表作用
+list_01 = [1,9,9,5,0,8,0,9]  #GNZ48-陈珂生日
+print(Counter(list_01))  #Counter({9: 3, 0: 2, 1: 1, 5: 1, 8: 1})
+ 
+#对字符串作用
+temp = Counter('abcdeabcdabcaba')
+print(temp)  #Counter({'a': 5, 'b': 4, 'c': 3, 'd': 2, 'e': 1})
+#以上其实是两种使用方法，一种是直接用，一种是实例化以后使用,如果要频繁调用的话，显然后一种更简洁
+
+#查看类型
+print( type(temp) ) #<class 'collections.Counter'>
+ 
+#转换为字典后输出
+print( dict(temp) ) #{'b': 4, 'a': 5, 'c': 3, 'd': 2, 'e': 1}
+ 
+for num,count in enumerate(dict(temp).items()):
+    print(count)
+"""
+('e', 1)
+('c', 3)
+('a', 5)
+('b', 4)
+('d', 2)
+"""
+
+#查看类型
+print( type(temp) ) #<class 'collections.Counter'>
+ 
+#转换为字典后输出
+print( dict(temp) ) #{'b': 4, 'a': 5, 'c': 3, 'd': 2, 'e': 1}
+ 
+for num,count in enumerate(dict(temp).items()):
+    print(count)
+"""
+('e', 1)
+('c', 3)
+('a', 5)
+('b', 4)
+('d', 2)
+"""
+
+
+#求序列中出现次数最多的元素
+ 
+from collections import Counter
+ 
+list_01 = [1,9,9,5,0,8,0,9]
+temp = Counter(list_01)
+ 
+#统计出现次数最多的一个元素
+print(temp.most_common(1))   #[(9, 3)]  元素“9”出现3次。
+print(temp.most_common(2)) #[(9, 3), (0, 2)]  统计出现次数最多个两个元素
+ 
+#没有指定个数，就列出全部
+print(temp.most_common())  #[(9, 3), (0, 2), (1, 1), (5, 1), (8, 1)]
+
+from collections import Counter
+ 
+c = Counter('ABCABCCC')
+print(c.elements()) #<itertools.chain object at 0x0000027D94126860>
+ 
+#尝试转换为list
+print(list(c.elements())) #['A', 'A', 'C', 'C', 'C', 'C', 'B', 'B']
+ 
+#或者这种方式
+print(sorted(c.elements()))  #['A', 'A', 'B', 'B', 'C', 'C', 'C', 'C']
+ 
+#这里与sorted的作用是： list all unique elements，列出所有唯一元素
+#例如
+print( sorted(c) ) #['A', 'B', 'C']
+        
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+
+        counts = Counter(s)
+        res = 0
+        foundOdd = False
+        
+        for val in counts.values():
+            if val%2 == 0:
+                res += val
+            else:
+                foundOdd = True
+                res += val-1
+        
+        return res+1 if foundOdd else res
