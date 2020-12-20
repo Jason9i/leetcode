@@ -1,0 +1,64 @@
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+
+        def helper(node):
+            nonlocal res
+            
+            if not node:
+                return 0
+            
+            left = helper(node.left)
+            right = helper(node.right)
+            
+            res = max(res, left + right)
+            
+            return max(left, right) + 1
+        
+        res = 0
+        
+        helper(root)
+        
+        return res
+
+No Global Variable DFS Simple Solution
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        def dfs(node):
+            if not node:
+                return 0, 0
+            left_optimal, left_extendible = dfs(node.left)
+            right_optimal, right_extendible = dfs(node.right)
+            current_extendible = max(left_extendible, right_extendible) + 1
+            current_optimal = max(left_optimal, right_optimal, left_extendible + right_extendible)
+            return current_optimal, current_extendible
+        global_optimal, global_extendible = dfs(root)
+        return global_optimal
+ 
+ 
+ 
+ 
+ """
+could be one of the three cases
+
+     lh+rh         ldia           rdia
+      /\           /\             /\
+     /  \         /\               /\
+    /    \       /  \             /  \
+                /    \           /    \
+"""
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if root is None:
+            return 0
+        lheight = self.height(root.left)
+        rheight = self.height(root.right)
+        
+        ldia = self.diameterOfBinaryTree(root.left)
+        rdia = self.diameterOfBinaryTree(root.right)
+        
+        return max(lheight+rheight, max(ldia, rdia))
+    
+    def height(self, root):
+        if root is None:
+            return 0
+        return 1 + max(self.height(root.left), self.height(root.right))
