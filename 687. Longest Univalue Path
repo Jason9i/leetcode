@@ -1,3 +1,54 @@
+Similiar to 543. Diameter of Binary Tree.
+
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+
+        def helper(node):
+            nonlocal res
+            
+            if not node:
+                return 0
+            
+            left = helper(node.left)
+            right = helper(node.right)
+            
+            res = max(res, left + right)
+            
+            return max(left, right) + 1
+        
+        res = 0
+        
+        helper(root)
+        
+        return res
+
+
+class Solution:
+    def longestUnivaluePath(self, root: TreeNode) -> int:
+        
+        def helper(node):
+            nonlocal res
+            
+            if not node:
+                return 0
+            
+            left = helper(node.left)
+            right = helper(node.right)
+            
+            if not node.left or node.left.val != node.val: left = 0
+            if not node.right or node.right.val != node.val: right = 0
+                
+            res = max(res, 1+ left + right)
+            
+            return max(left, right) + 1
+        
+        res = 0
+        
+        helper(root)
+        
+        return max(0, res -1)
+
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
