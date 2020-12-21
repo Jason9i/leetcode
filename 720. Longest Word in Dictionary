@@ -1,0 +1,89 @@
+brute force
+
+time complexity: ++wi**2
+space complexity； n*w
+
+decresing time: 
+  1. sort
+  2. pruning
+  
+  
+Trie: 
+
+time complexity: ++wi
+space complexity； 26*n*w
+
+空间换时间
+
+The solution works by sorting by length at first and checking if the current_prefix (everything but the last character) is in the set of prefixes.
+
+The set of prefixes is first built by adding all the characters of length one since those are our building blocks from the very beginning.
+
+The second step if for the current word, consider the current_prefix (everything but the last character) if we have seen it in prefixes set 
+then go ahead and add the current word to the set of prefixes and update the answer.
+
+There is the case were the answer will be same length, in this case we only choose the smallest lexicographically which is done using the min() function.
+
+One final case is when no words are buildable aside from the initial words of len 1, in this case we return the first element of words e.g words[0] 
+since the sorted(key=len) call will sort by the first character (lexicographically) and by the length.
+
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        prefixes = set()
+                
+        words = sorted(words, key=len)
+        ans = ""
+        for idx, word in enumerate(words):
+        
+            current_prefix = word[:len(word) - 1]
+            if len(word) == 1:
+                current_prefix = word
+    
+            if current_prefix not in prefixes and len(word) > 1:
+                pass 
+            
+            else:
+                prefixes.add(word)
+                if ans != "" and len(ans) == len(word):
+                    ans = min(ans, word)
+                else:
+                    ans = word
+        return ans
+
+
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        '''
+        Initialize the dp table, where key is every word in the dictionary
+        and the value is a boolean value indciating whether this word
+        can be reached step by step
+        '''
+        table = {w : None for w in words}
+        
+        def dp(w):
+            '''
+            a recursive function that fills in the dp table
+            '''
+            nonlocal table
+            if len(w) == 0:
+                return True
+            elif w not in table:
+                return False
+            elif table[w] != None:
+                return table[w]
+            else:
+                return dp(w[:-1])
+        
+        cur_max, res = 0, ''
+        for word in words:
+            table[word] = dp(word)
+            if table[word]:
+                if len(word) > cur_max:
+                    cur_max = len(word)
+                    res = word
+                elif len(word) == cur_max and word < res:
+                    # if they have the same length and 
+                    # this word is lexicographically smaller, replace the current res
+                    res = word
+        
+        return res
