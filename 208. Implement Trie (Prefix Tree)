@@ -1,3 +1,40 @@
+class Trie:
+
+    # Trie data structure class 
+    def __init__(self):
+        
+        self.dic={}
+
+    def insert(self, word: str) -> None:
+        cur = self.dic
+        for ch in word:
+            if ch not in cur:
+                cur[ch] = {}
+            cur = cur[ch]
+        cur['flag'] = True
+
+
+    def search(self, word: str) -> bool:
+        cur = self.dic
+        for ch in word:
+            if ch not in cur:
+                return False
+            cur = cur[ch]
+
+        return 'flag' in cur
+
+
+    def startsWith(self, prefix: str) -> bool:
+        cur = self.dic
+        for ch in prefix:
+            if ch not in cur:
+                return False
+            cur = cur[ch]
+
+        return True
+
+
+
 class TrieNode:
     def __init__(self):
         self.childNodes = {}
