@@ -1,0 +1,33 @@
+ def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+        
+        res = []
+        for val in range(left, right+1):
+            
+            number = val
+            isVal = True
+            
+            while number != 0:
+                check = number%10
+                if check == 0 or val%check != 0:
+                    isVal = False
+                    break
+                number //= 10
+            if isVal:
+                res.append(val)
+                
+        return res
+  
+ class Solution:
+    def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+        # corner case
+        
+        res = []
+        for i in range(left,right+1):
+            flag = 1
+            for s in str(i):
+                if int(s) == 0 or i%(int(s)) != 0:
+                    flag = 0
+                    break
+            if flag:
+                res.append(i)
+        return res
