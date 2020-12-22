@@ -1,0 +1,131 @@
+python interval tree
+
+define a Node represending an interval having an internal reference to track overlapping intervals.
+
+for each interval, perform a check operation to see if it can be inserted.
+
+go to right node, if interval start > node.end
+go to left node, if interval end < node.start
+else find out the overlapping portion and perform similar check query inside internal tree for this node.
+if check return true, then insert the node.
+
+class MyCalendarTwo:
+
+    def __init__(self):
+        self.root = None
+
+    def book(self, start: int, end: int) -> bool:
+        def check(node, start, end):  
+            def check_internal(node, start, end):
+                if start >= end:
+                    return True
+
+                if start >= node.end:
+                    if not node.right:
+                        return True
+                    return check_internal(node.right, start, end)
+    
+                if end <= node.start:
+                    if not node.left:
+                        return True
+                    return check_internal(node.left, start, end)
+            
+                return False
+
+            if start>=end:
+                return True
+
+            # go to right
+            if start >= node.end:
+                if not node.right:
+                    return True
+                return check(node.right, start, end)
+    
+            # go to left
+            if end <= node.start:
+                if not node.left:
+                    return True
+                return check(node.left, start, end)
+
+            # handle overlapping part
+            new_start, new_end = max(node.start, start), min(node.end, end)
+            if node.internal and not check_internal(node.internal, new_start, new_end):
+                return False
+
+            # left part
+            left_end = min(end, node.start)
+            if not check(node, start, left_end):
+                return False
+
+            # right part
+            right_start = max(node.end, start)
+            if not check(node, right_start, end):
+                return False
+            
+            return True
+    
+        def book(node, start, end):
+            def book_internal(node, start, end):
+                if start >= end:
+                    return
+                
+                # go to right
+                if start >= node.end:
+                    if not node.right:
+                        node.right = Node(start, end)
+                        return 
+                    return book_internal(node.right, start, end)
+
+                # go to left
+                if end <= node.start:
+                    if not node.left:
+                        node.left = Node(start, end)
+                        return
+                    return book_internal(node.left, start, end)
+
+                
+                
+            if start >= end:
+                return
+
+            # go to right
+            if start >= node.end:
+                if not node.right:
+                    node.right = Node(start, end)
+                    return 
+                return book(node.right, start, end)
+
+            # go to left
+            if end <= node.start:
+                if not node.left:
+                    node.left = Node(start, end)
+                    return
+                return book(node.left, start, end)
+
+            # handle overlapping part
+            
+            # left part
+            left_end = min(end, node.start)
+            book(node, start, left_end)
+
+            # right part
+            right_start = max(node.end, start)
+            book(node, right_start, end)
+            
+            # central part
+            new_start, new_end = max(node.start, start), min(node.end, end)
+            if not node.internal:
+                node.internal = Node(new_start, new_end)
+            else:
+                book_internal(node.internal, new_start, new_end)
+                
+    
+        if not self.root:
+            self.root = Node(start, end)
+            return True
+        
+        if not check(self.root, start, end):
+            return False
+        
+        book(self.root, start, end)
+        return True
