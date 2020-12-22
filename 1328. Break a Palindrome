@@ -1,0 +1,15 @@
+If length of palindrome == 1, return ''
+For even length string, if we found a char that is not a, replace it with a and return
+For odd length string, if we find a char that is not a and it's not the middle of string, replace it with a and return
+If all a in the string, replace the last char to b
+
+
+class Solution:
+    def breakPalindrome(self, palindrome: str) -> str:     
+        
+        for i in range(len(palindrome)//2):
+            if palindrome[i] != 'a':
+                return palindrome[:i]+'a'+palindrome[i+1:]
+            
+        return palindrome[:-1]+'b' if len(palindrome)>1 else ""
+        
