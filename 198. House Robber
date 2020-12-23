@@ -1,0 +1,35 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 0: return 0
+        if n == 1: return nums[0]
+        if n == 2: return max(nums[0], nums[1])
+        dp = [0]*len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        for idx in range(2,n):
+            dp[idx]= max(dp[idx-1], nums[idx] + dp[idx-2])
+        
+        return dp[-1]
+            
+            
+
+        
+
+
+Python 3, similar concept as Fibonacci Sequence
+
+Fibonacci sum the last two number, nums[i] and nums[i-1]
+
+This Robber sum the (result from i-2) and nums[i]
+
+Because we are using the (result from i-2), so we never sum two adjacent numbers.
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        prev=curr=0
+        
+        for each in nums:
+            prev, curr = curr, max(curr, prev+each)
+            
+        return curr
