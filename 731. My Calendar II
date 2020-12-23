@@ -1,3 +1,51 @@
+使用暴力解法。
+
+使用两个list分别保存已经预定了的区间和已经重叠了的区间。（深刻理解你定义的东西是什么，只有理解了才能做题）
+
+判断区间重叠的方式是两个区间的起点的最大值 < 两个区间的终点的最小值。
+
+那么，当一个新的区间到达的时候，先要对已经重叠的区间进行一个遍历，如果发现重叠，那么直接失败。
+
+否则代表能添加成功，添加成功的含义是，当前区间不和任何overlaped里区间有交集。所以，更新已经重叠的区间的方式是找到和当前区间重叠的区间，然后添加到overlaped里。最后把当前区间放到booked里。
+
+注意，在寻找新的重叠区间的时候，需要对所有的已经预定的区间进行遍历，也就是说我们当前的这个区间有可能和多个已经预定的区间重叠，要把多个重叠区间都放到overlaped里去。
+
+时间复杂度是O(N^2)，空间复杂度是O(N).
+
+class MyCalendarTwo(object):
+
+    def __init__(self):
+        # 每个被book了的区间
+        self.booked = list()
+        # 每个重叠了的区间
+        self.overlaped = list()
+
+    def book(self, start, end):
+        """
+        :type start: int
+        :type end: int
+        :rtype: bool
+        """
+        for start_ol, end_ol in self.overlaped:
+            if max(start_ol, start) < min(end_ol, end):
+                return False
+        for start_valid, end_valid in self.booked:
+            l_ol = max(start_valid, start)
+            r_ol = min(end_valid, end)
+            if l_ol < r_ol:
+                self.overlaped.append((l_ol, r_ol))
+        self.booked.append((start, end))
+        return True
+
+
+# Your MyCalendarTwo object will be instantiated and called as such:
+# obj = MyCalendarTwo()
+# param_1 = obj.book(start,end)
+
+
+
+
+
 python interval tree
 
 define a Node represending an interval having an internal reference to track overlapping intervals.
