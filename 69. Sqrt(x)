@@ -1,0 +1,11 @@
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        sqr_root = x ** 0.5
+        return int(sqr_root)
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        a = x            
+        while int(a) * int(a) > x:
+            a -= (a * a - x) / (2 * a)            
+        return int(a)
