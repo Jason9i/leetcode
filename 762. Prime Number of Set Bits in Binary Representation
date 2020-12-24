@@ -1,0 +1,17 @@
+class Solution:
+    def countPrimeSetBits(self, L: int, R: int) -> int:         
+	# We know that the maximum input is 10^6 and the maximum number closest to this limit 
+	# with the most 1s is 983039 which contains 19 1s. So we just need to initialize a set
+	# containing primes from 2 to 19.
+	
+        primes = {2, 3, 5, 7, 11, 13, 17, 19}
+        ans = 0
+		
+	# From here we just simply loop through the given range and check if the number of 
+	# 1s is in our initialized set
+		
+        for i in range(L, R+1):
+            if bin(i).count("1") in primes:
+                ans += 1
+        
+        return ans
