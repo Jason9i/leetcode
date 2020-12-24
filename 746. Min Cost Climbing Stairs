@@ -1,0 +1,38 @@
+Python DP. Simple 3 line program
+
+Intuition
+
+There is a clear recursion available: the final cost f[i] to climb the staircase from some step i is f[i] = cost[i] + min(f[i+1], f[i+2]). 
+This motivates dynamic programming.
+
+Algorithm
+
+Let's evaluate f backwards in order. That way, when we are deciding what f[i] will be, we've already figured out f[i+1] and f[i+2].
+
+We can do even better than that. At the i-th step, let f1, f2 be the old value of f[i+1], f[i+2], and update them to be the new values f[i], f[i+1]. 
+We keep these updated as we iterate through i backwards. At the end, we want min(f1, f2).
+
+Starting on step 0 has cost[0] and starting on step 1 has cost[1]. 
+How can we get to the ith step? Well we can be on step i - 1 and take one step or we can be on step i - 2 and take 2 steps. 
+So the minimum cost to be standing on the ith step would then cost us cost[i] + the cheaper of the 2 possible ways to get to the ith step. 
+We build dp[], where dp[i] refers to the minimum cost to be standing on the ith step. 
+Now how do we reach the top? We can be standging on the last step and take 1 more step or we can be on the second to last step and take 2 steps. 
+So we return the cheaper of these two steps to be standing on.
+
+ def minCostClimbingStairs(self, cost: List[int]) -> int:
+        dp = [0]*len(cost)
+        dp[0] = cost[0]
+        dp[1] = cost[1]
+        
+        for i in range(2, len(cost)):
+            dp[i] = cost[i] + min(dp[i - 1], dp[i - 2])
+        return min(dp[len(cost) - 1], dp[len(cost) - 2])
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        
+        for i in range(1,len(cost)-1):
+            cost[i+1]=cost[i+1]+min(cost[i],cost[i-1])
+        return min(cost[-1],cost[-2])
+        
