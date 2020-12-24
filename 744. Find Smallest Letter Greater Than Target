@@ -1,0 +1,11 @@
+class Solution:
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
+        sml_list = []
+        for i in letters:
+            if i > target:
+                sml_list.append(i)
+        letters.sort()
+    
+        if sml_list == []: return letters[0]
+        sml_list.sort()
+        return sml_list[0]
