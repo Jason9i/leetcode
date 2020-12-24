@@ -1,0 +1,65 @@
+   class Solution:
+    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
+        lic = licensePlate.lower()
+        res = []
+        for i in lic:
+            if i >= "a" and i <= "z":
+                res.append(i)
+        words.sort(key=len)
+        def words_in(res, words):
+            for char in res:
+                if res.count(char) > word.count(char):
+                    return False
+            return True
+        for word in words:
+            if words_in(res, word):
+                return word
+         
+   class Solution:
+    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
+        licensePlate=licensePlate.lower()
+        s=set(licensePlate)
+        d={}
+        for i in s:
+            if i.isalpha():
+                d[i]=licensePlate.count(i)
+        re=[]
+        for w in words:
+            w=w.lower()
+            flag=True
+            for key,value in d.items():
+                if key in w:
+                    if w.count(key)>=value:
+                        continue
+                    else:
+                        flag=False
+                        break
+                else:
+                    flag=False
+                    break
+            if flag:
+                re.append(w)
+        l=len(re[0])
+        ans=re[0]
+        for i in range(0,len(re)):
+            if len(re[i])<l:
+                ans=re[i]
+                l=len(re[i])
+        return ans
+   
+   
+   class Solution:
+    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
+        strs = []
+        for char in licensePlate.lower():
+            if char.isalpha():
+                strs.append(char)
+        words.sort(key=len)
+        def words_in(strs,words):
+            for char in strs:
+                if strs.count(char) > words.count(char):
+                    return False
+            return True
+        for word in words:
+            if words_in(strs, word):
+                return word
