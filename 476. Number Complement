@@ -1,0 +1,25 @@
+class Solution:
+    def findComplement(self, num: int) -> int:
+        ## RC ##
+		## APPROACH : BIT MANIPULATION ##
+		## LOGIC ##
+		#	1. 1 xor 1 = 0 and 0 or 1 = 1, from these we can say that XORing with 1 will give its complement bit
+		#	2. so, for 5 ==> 101, bitmask is 111, for 6 ==> 110, bitmask is 111, so bitmask is (length number of 1's)
+		#	3. How do we length of given bit ? we use log function
+		#	4. (ex: for 5), we take 1 and left shift by length obtained from 3, i.e (1000) now, substract 1, it will give (111) ==> bitmask
+		
+        ## TIME COMPLEXICITY : O(1) ## (coz make n= 32)
+		## SPACE COMPLEXICITY : O(1) ##
+        
+        n = floor(log2(num)) + 1        # n is a length of num in binary representation
+        bitmask = (1 << n) - 1          # bitmask has the same length as num and contains only ones 1...1
+        return bitmask ^ num
+        
+        
+        
+  class Solution:
+    def findComplement(self, num: int) -> int:
+
+        length= (int)(math.floor(math.log2(num))) + 1
+        ans=(2**(length)-1)^num
+        return ans
