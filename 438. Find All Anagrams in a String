@@ -1,0 +1,122 @@
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        ## RC ##
+        ## APPROACH : CHAR_COUNT_BITMAP ##
+        ## SIMILAR TO LEETCODE 49. Group Anagrams ##
+        
+		## TIME COMPLEXITY : O(N) ##
+		## SPACE COMPLEXITY : O(N) ##
+
+        if(len(s) < len(p)) : return []
+        
+        def generateBitMap(s):
+            bitMap = [0] * 26
+            for ch in s:
+                bitMap[ ord(ch) - ord('a') ] += 1
+            return bitMap
+        
+        res = []
+        pBitMap = generateBitMap(p)
+        currMap = generateBitMap(s[:len(p)])
+        
+        if(currMap == pBitMap):
+            res.append(0)
+            
+        for i in range(len(p), len(s)):
+            currMap[ ord(s[i]) - ord('a') ] += 1                # increment current char count in the bitmap
+            currMap[ ord(s[i-len(p)]) - ord('a') ] -= 1         # removing previous char count in the bitmap
+            if( currMap == pBitMap ):
+                res.append(i - len(p) + 1)
+        return res
+
+
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        l = len(p)
+        result = set()
+        p_sort = sorted(p)
+        i = 0 
+        if len(s) == 0 or len(p) == 0 :
+            return result
+        while True :
+            temp = sorted(s[i:l])
+            if len(temp) < len(p) :
+                break
+            if temp == p_sort :
+                result.add(i)
+                i+=1
+                l+=1
+            else :
+                i+=1
+                l+=1
+        return result
+
+
+
+import collections
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        
+        myDictP=collections.Counter(p)
+        myDictS=collections.Counter(s[:len(p)])
+        output=[]
+        i=0
+        j=len(p)
+        
+        while j<=len(s):
+            if myDictS==myDictP:
+                output.append(i)
+
+            myDictS[s[i]]-=1
+            if myDictS[s[i]]<=0:
+                myDictS.pop(s[i])
+                
+            if j<len(s):    
+                 myDictS[s[j]]+=1
+            j+=1
+            i+=1
+            
+        return output    
+
+
+
+One solution is start with a sliding window of size len(w), that moves 1 step to the right at each iteration.
+The algorithm is as follows:
+
+At the beginning of an iteration, we check if the current window contains an anagram of W using a temporary counter.
+a. If yes, we add the start index of the window the the result.
+b. If not, we slide the window, and adjust the temporary counter by decrementing the count for the outgoing character, and incrementing the count for the incoming character.
+If the end has not moved past the last index of S, go to step 1.
+Time complexity: If m = len(W) and n = len(W), O(mn), since we make a single pass over S, and only add the unique letters from W to the dictionaries. Space complexity: O(W).
+
+Can we do better?
+
+The problem with the above algorithm is the Counter comparison that happens at every iteration. Instead, let's keep track of the letters remaining to complete the anagram in a Counter. When all the counts are zero, we've found an anagram within the current sliding window of size |W|.
+To keep track of when all the counts are zero, without having to check every entry in the Counter, we maintain a distance from the goal state (anagram found). When the distance is zero, we've found an anagram. We begin with a distance of |W|, obviously, since we haven't seen any letters yet.
+
+For every new letter seen at an iteration, if it's present in Counter, we decrement the value by 1 (1 fewer letter remains to be seen). If the value becomes negative, we have seen too many of this letter, and we increment the distance by 1; otherwise we decrement the distance, indicating we had previously seen fewer of this character, and are now moving closer to the goal state.
+
+For every letter going out of the sliding window, if it's present in Counter, we increment the value by 1 (1 more letter remains to be seen). If the value becomes positive, we need more of this letter, and we increment the distance by 1; otherwise we decrement the distance, indicating we had previously seen more of this character, and are now moving closer to the goal state.
+
+With this improvement, checking whether the current window contains an anagram becomes O(1), and the overall algorithm
+O(n).
+
+
+def findAnagrams(self, s: str, w: str) -> List[int]:
+    remains_to_be_seen: Counter[str] = collections.Counter(w)
+    result: List[int] = []
+    dist: int = len(w)
+
+    for i in range(len(s)):
+        if s[i] in remains_to_be_seen:
+            remains_to_be_seen[s[i]] -= 1
+            dist += 1 if remains_to_be_seen[s[i]] < 0 else -1
+        j: int = i - len(w)
+        if j >= 0 and s[j] in remains_to_be_seen:
+            remains_to_be_seen[s[j]] += 1
+            dist += 1 if remains_to_be_seen[s[j]] > 0 else -1
+
+        if dist == 0:
+            result.append(j + 1)
+
+    return result
