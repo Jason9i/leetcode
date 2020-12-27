@@ -6,3 +6,21 @@ class Solution:
             res+=n%2  # checking if rightmost bit of n is 1 and adding to result
             n=n>>1     # checking all bits of n till n becomes 0
         return res
+
+
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        a = ""
+        while n > 0:
+            a += str(n%2)
+            n = n//2
+        while len(a) < 32:
+            a += "0"
+        c = len(a)
+        b = 0
+        ans = 0
+        for i in range(c-1, -1, -1):
+            if a[i] == "1":
+                ans += (2**b)
+            b += 1
+        return ans
