@@ -1,0 +1,66 @@
+欧几里得距离 (Euclidean distance)
+
+在数学中，欧几里得距离或欧几里得度量是欧几里得空间中两点间“普通”距离。使用这个距离，欧氏空间成为度量空间。相关联的范数称为欧几里得范数。较早的文献称之为毕达哥拉斯度量。
+
+A lambda function is a small anonymous function.
+
+A lambda function can take any number of arguments, but can only have one expression.
+
+class Solution(object):
+    def kClosest(self, points, K):
+        return sorted(points, key = lambda p : sqrt(p[0] * p[0] + p[1] * p[1]))[:K]
+
+
+
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        result = []
+        for i, point in enumerate(points):
+            distance = pow(pow(point[1] , 2) + pow(point[0], 2), 0.5)
+            result.append([distance, point])
+        return [x[1] for x in sorted(result)][0:K]
+
+import heapq
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        d=[]
+        for i in points:
+            if len(d)<K:
+                heapq.heappush(d,[-(i[0]**2 + i[1]**2),i])
+            else:
+                heapq.heappushpop(d,[-(i[0]**2 + i[1]**2),i])
+        return [i[1] for i in d]  
+        
+def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+	dist = lambda p: p[0]**2 + p[1]**2
+
+	dist_list = [ (dist(p), p) for p in points]
+	heapq.heapify(dist_list)
+
+	return [heapq.heappop(dist_list)[1] for _ in range(K)
+  
+  
+Without extra memory (modify input):
+
+class Solution(object):
+    def kClosest(self, points, K):
+        points.sort(key = lambda p : sqrt(p[0] * p[0] + p[1] * p[1]))
+        return points[:K]
+        
+        
+Immutable approach:
+
+
+        
+
+import heapq
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        temp_res = {}
+        if not points:
+            return temp_res
+        for pt in points:
+            res =abs(((pt[0]-0)**2 + (pt[1]-0)**2)**0.5)
+            pts = tuple(pt)
+            temp_res[pts] = res
+        return heapq.nsmallest(K,temp_res,key=temp_res.get)
