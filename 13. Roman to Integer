@@ -1,0 +1,64 @@
+
+Runtime: 48 ms, faster than 60.16% of Python3 online submissions for Roman to Integer.
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        mapping = { "I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000 }
+        num, temp = 0, 0
+        for i, c in enumerate(s[0:-1]):
+            if mapping[c] < mapping[s[i+1]]:
+                temp = mapping[c]
+            else:
+                num += (mapping[c] - temp)
+                temp = 0
+        return num + (mapping[s[-1]] - temp)
+
+
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        intValue = 0
+        romanLen = len(s) - 1
+        i = 0
+        values = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        
+        while i < romanLen:
+            currentInt = values[s[i]]
+            nextInt = values[s[i+1]]
+            
+            if currentInt in (1, 10, 100) and nextInt in (currentInt*5, currentInt*10):
+                intValue += nextInt - currentInt
+                i += 2
+            else:
+                intValue += currentInt
+                i += 1
+                
+        if i == romanLen:
+            intValue += values[s[i]]
+        
+        return intValue
+        
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        
+        roman = {'I':1, 'V':5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        
+        res = roman[s[len(s)-1]]
+        pos = len(s) - 1 
+        
+        while pos >= 1:
+            
+            curr = roman[s[pos]]
+            prev = roman[s[pos-1]]
+            
+            if prev < curr:
+                
+                res  = res - prev
+            
+            elif prev >= curr:
+                
+                res = res + prev
+            
+            pos -= 1 
+        
+        return res
+        
+        
