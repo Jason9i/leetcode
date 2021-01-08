@@ -1,0 +1,58 @@
+class Solution:
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        result, stack = [], []
+
+        if root:
+			# (root, running_sum, path_values)
+            stack.append((root, root.val, [root.val]))
+
+        while stack:
+            node, running_sum, vals = stack.pop()
+			
+			# if it's a leaf node and the running_sum equals sum, append path to results
+            if not node.left and not node.right and running_sum == sum:
+                result.append(vals)
+			
+			# if there's a right node and/or a left node, add their info to the stack
+            if node.right:
+                stack.append((node.right, running_sum+node.right.val, vals + [node.right.val]))
+            if node.left:
+                stack.append((node.left, running_sum+node.left.val, vals + [node.left.val]))
+
+        return result
+
+
+
+
+
+class Solution:
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        
+        result = []
+        
+        # --------------------------------------
+        def dfs(node, cur_path, target):
+            
+            if node:
+
+                if not node.left and not node.right:
+				
+                    # base case aka stop condition
+					
+                    if target == node.val:
+					    # current path sum is the same as wanted value
+                        result.append( cur_path[::] + [node.val] )
+                
+                else:
+				
+                    # general case:
+					# update current path and target, keep solving in DFS
+                    dfs(node.left, cur_path + [node.val], target - node.val )
+                    dfs(node.right, cur_path + [node.val], target - node.val )
+            
+            return
+        
+        # --------------------------------------
+        
+        dfs(node=root, cur_path=[], target=sum)
+        return result
