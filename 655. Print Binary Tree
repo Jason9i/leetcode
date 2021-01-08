@@ -1,0 +1,19 @@
+class Solution:
+    def printTree(self, root: TreeNode) -> List[List[str]]:
+        def depth(root: TreeNode) -> int:
+            if not root:
+                return 0
+            return max(depth(root.left), depth(root.right)) + 1
+        
+        def print(root: TreeNode, row: int) -> List[List[str]]:
+            col = 2**row-1
+            if not root:
+                return [[""] * col] * row
+            l = print(root.left, row-1)
+            r = print(root.right, row-1)
+            pad = (col- 1) // 2
+            rv = [[""] * pad + [str(root.val)] + [""] * pad]
+            for rl, rr in zip(l, r):
+                rv.append(rl + [""] + rr)
+            return rv
+        return print(root, depth(root))
