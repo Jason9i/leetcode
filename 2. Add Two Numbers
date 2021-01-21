@@ -60,3 +60,11 @@ to calculate the remainder you can use %:
 25
 >>> 2 ** 7  # 2 to the power of 7
 128
+
+
+链表的基本元素有：
+
+节点：每个节点有两个部分，左边部分称为值域，用来存放用户数据；右边部分称为指针域，用来存放指向下一个元素的指针。
+head:head节点永远指向第一个节点
+tail: tail永远指向最后一个节点
+None:链表中最后一个节点的指针域为None值
