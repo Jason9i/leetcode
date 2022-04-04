@@ -1,0 +1,44 @@
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        if len(prices)<=1:
+            return prices
+        stack = []
+        res = []
+        for i in range(len(prices)-1, -1,-1):
+            if len(stack) == 0:
+                res.append(prices[i])
+            elif stack[-1]<=prices[i]:
+                res.append(prices[i]-stack[-1])
+            else:
+                while stack and stack[-1]>prices[i]:
+                    stack.pop()
+                if len(stack)==0:
+                    res.append(prices[i])
+                else:
+                    res.append(prices[i]-stack[-1])
+            stack.append(prices[i])
+        return res[::-1]
+
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        if len(prices) <= 1:
+            return prices
+
+        for i in range(len(prices)-1):
+            k = i + 1
+            while k <len(prices) and prices[k]> prices[i]:
+                k += 1
+            if k <len(prices):
+                prices[i] -= prices[k]
+        return prices
+
+
+
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        stack = []
+        for i in range(len(prices)):
+            while stack and (prices[stack[-1]] >= prices[i]):
+                prices[stack.pop()] -= prices[i]
+            stack.append(i)
+        return prices
