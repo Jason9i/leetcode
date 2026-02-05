@@ -1,4 +1,24 @@
 Python3:
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        if len(nums) < 2 or len(nums) > 10**4:
+            return None
+        if target < -10**9 or target > 10**9:
+            return None    
+        
+        for index_num, num in enumerate(nums):
+            if num < -10**9 or num > 10**9:
+                return None
+            else:
+                pair = target - num
+                if pair in nums:
+                    index_pair = nums.index(pair)
+                    if index_pair != index_num:
+                        return (index_num, index_pair)        
+
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for i, num in enumerate(nums):
@@ -22,3 +42,15 @@ The list index() method can take a maximum of three arguments:
   element - the element to be searched
   start (optional) - start searching from this index
   end (optional) - search the element up to this index
+
+
+  //hashmap O(n) solution
+  class solution:
+        def twoSum(self, nums:[list], target: init) -> list[int]:
+            result = {} //hashmap to store number and its index
+            for index_num, num in enumerate (nums):
+                pair = target - num
+                if pair in result:
+                    return [result[pair], index_num]
+                result[num] = index_num
+
