@@ -1,0 +1,4 @@
+ListNode
+
+addTwoSum:
+    res.next = ListNode(sum % 10)
