@@ -2,3 +2,11 @@ ListNode
 
 addTwoSum:
     res.next = ListNode(sum % 10)
+
+LongestSubString:
+    for i in range(len(s)):
+        if s[i] in dic: //which means repeat character exist
+            left = max(left, dic[s[i]]+ 1) //left pointer need to move right one
+        result = max ( result, i-start + 1)
+        dic[s[i]] = i
+        
