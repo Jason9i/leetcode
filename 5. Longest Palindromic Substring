@@ -174,7 +174,10 @@ class Solution:
         return s[start: start + length]    
         
         
-         
+
+
+        // 1 2 3 4 5 
+        // 12 34 56 
       
            
         

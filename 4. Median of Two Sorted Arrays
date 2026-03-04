@@ -11,19 +11,19 @@ class Solution:
             j = (len_n1 + len_n2 + 1) //2 - i
 
             maxLeftA = float("-inf") if i == 0 else nums1[i-1]
-            minrightA = float("inf") if i == len_n1 else nums1[i]
+            minRightA = float("inf") if i == len_n1 else nums1[i]
 
-            maxleftB = float("-inf") if j == 0 else nums2[j-1]
+            maxLeftB = float("-inf") if j == 0 else nums2[j-1]
             minRightB = float("inf") if j == len_n2 else nums2[j]
 
-            if maxLeftA <= minRightB and minrightA >= maxleftB:
+            if maxLeftA <= minRightB and minRightA >= maxLeftB:
 
                 if (len_n1 + len_n2)%2 == 0:
-                    return (max(maxLeftA, maxleftB) + min(minrightA, minRightB)) /2
+                    return (max(maxLeftA, maxLeftB) + min(minRightA, minRightB)) /2
                 else:
-                    return max(maxLeftA, maxleftB)
+                    return max(maxLeftA, maxLeftB)
 
-            elif maxleftB > minrightA:
+            elif maxLeftB > minRightA:
                 left = i + 1
             else:
                 right = i - 1    
@@ -31,3 +31,6 @@ class Solution:
 
 
 
+
+
+need revisit. 

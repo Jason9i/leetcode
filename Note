@@ -10,3 +10,21 @@ LongestSubString:
         result = max ( result, i-start + 1)
         dic[s[i]] = i
         
+
+
+LongestSubString:
+    define sub function
+
+    middile (i,i) or (i,i+1)
+    start = i - (cur -1) //2
+    str[start: start + cur]
+
+
+    baccddccakwm
+
+    accddcca
+    1 9
+    cur = 8
+    i = 4 -- index
+    start = 4 - (8-1)//2 = 1 -- index
+
