@@ -28,3 +28,18 @@ LongestSubString:
     i = 4 -- index
     start = 4 - (8-1)//2 = 1 -- index
 
+
+ReverseInteger:
+    if res > (maxInt - x%10)//10, return 0 // to avoid res + x%10 overflow
+    res = res*10 +x%10
+    x //=10
+
+
+string to integer:
+    s.strip() // remove leading and trailing spaces
+    if s[0] in '-+':
+        s = s.replace(s[0], '', 1) // remove the sign character or s = s[1:]
+
+    while i < len(s) and s[i].isdigit():    
+        ans = ans * 10 + int(s[i])
+        i += 1
