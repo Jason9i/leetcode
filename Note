@@ -43,3 +43,6 @@ string to integer:
     while i < len(s) and s[i].isdigit():    
         ans = ans * 10 + int(s[i])
         i += 1
+
+isPalindrome:
+    x = str(x)
