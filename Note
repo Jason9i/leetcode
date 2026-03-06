@@ -46,3 +46,6 @@ string to integer:
 
 isPalindrome:
     x = str(x)
+
+container with most water:
+    l, r, area = 0, len(height) - 1, 0
