@@ -49,3 +49,13 @@ isPalindrome:
 
 container with most water:
     l, r, area = 0, len(height) - 1, 0
+
+
+13. Roman to Integer
+    s[0:-1] from index 0 to the second-last character
+    dic={'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+
+    if i<len(s)-1 and dic[s[i]] < dic[s[i+1]]:
+        res -= dic[s[i]]
+    else:
+        res += dic[s[i]]
