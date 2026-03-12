@@ -67,3 +67,10 @@ Index: 0 1 2 3 4
 Value: 2 3 1 1 4
              ↑
            goal
+
+45. Jump Game II
+    farthest = max (farthest, i + nums[i])
+    if i == currentEnd:
+        jumps += 1
+        currentEnd = farthest
+        
