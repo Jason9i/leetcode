@@ -73,4 +73,11 @@ Value: 2 3 1 1 4
     if i == currentEnd:
         jumps += 1
         currentEnd = farthest
+
+
+274. H-Index
+ citations.sort(reverse=True)
+  for i, num in enumerate(citations):
+        if num >= i+1:
+            h = i+1
         
