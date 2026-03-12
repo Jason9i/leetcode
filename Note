@@ -59,3 +59,11 @@ container with most water:
         res -= dic[s[i]]
     else:
         res += dic[s[i]]
+
+55. Jump game: 
+
+for i in range(len(nums)-2,-1,-1): //start, stop, step
+Index: 0 1 2 3 4
+Value: 2 3 1 1 4
+             ↑
+           goal
